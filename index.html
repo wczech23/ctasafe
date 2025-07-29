@@ -1,0 +1,146 @@
+<html>
+<head><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+     <style>
+        #map {
+                height: 600px;
+                width: 600px;
+                margin: 0 auto;
+                margin-top: 150;
+                border: 4px solid #0d0c0c;
+                display: none;
+             }
+        #form-container {
+                text-align: center;
+                margin-top: 100px;
+             } 
+     </style>
+</head>
+<body>
+  <div id="form-container" style="display: flex; justify-content: center; gap: 50px;">
+  <!-- Entering Station -->
+  <div id="entering-form">
+    <h3>Entering Station</h3>
+    <label for="lineDropdown_ent">Select Line:</label>
+    <select id="lineDropdown_ent">
+      <option value="">-- Choose a line --</option>
+      <option value="red">Red</option>
+      <option value="blue">Blue</option>
+      <option value="green">Green</option>
+      <option value="orange">Orange</option>
+      <option value="brown">Brown</option>
+      <option value="pink">Pink</option>
+    </select>
+
+    <br><br>
+
+    <label for="stationDropdown_ent">Select Station:</label>
+    <select id="stationDropdown_ent">
+      <option value="">-- Select a station --</option>
+    </select>
+
+    <br><br>
+
+    <label for="hour_ent">Entering time:</label>
+    <select id="hour_ent" name="hour_ent">
+      <option value="">-- Hour --</option>
+    </select>
+
+    <select id="minute_ent" name="minute_ent">
+      <option value="">-- Minute --</option>
+      <option value="00">00</option>
+      <option value="15">15</option>
+      <option value="30">30</option>
+      <option value="45">45</option>
+    </select>
+
+    <select id="ampm_ent" name="ampm_ent">
+      <option value="">-- AM/PM --</option>
+      <option value="AM">AM</option>
+      <option value="PM">PM</option>
+    </select>
+  </div>
+
+  <!-- Exiting Station -->
+  <div id="exiting-form">
+    <h3>Exiting Station</h3>
+    <label for="lineDropdown_ext">Select Line:</label>
+    <select id="lineDropdown_ext">
+      <option value="">-- Choose a line --</option>
+      <option value="red">Red</option>
+      <option value="blue">Blue</option>
+      <option value="green">Green</option>
+      <option value="orange">Orange</option>
+      <option value="brown">Brown</option>
+      <option value="pink">Pink</option>
+    </select>
+
+    <br><br>
+
+    <label for="stationDropdown_ext">Select Station:</label>
+    <select id="stationDropdown_ext">
+      <option value="">-- Select a station --</option>
+    </select>
+
+    <br><br>
+
+    <label for="hour_ext">Exiting Time:</label>
+    <select id="hour_ext" name="hour_ext">
+      <option value="">-- Hour --</option>
+    </select>
+
+    <select id="minute_ext" name="minute_ext">
+      <option value="">-- Minute --</option>
+      <option value="00">00</option>
+      <option value="15">15</option>
+      <option value="30">30</option>
+      <option value="45">45</option>
+    </select>
+
+    <select id="ampm_ext" name="ampm_ext">
+      <option value="">-- AM/PM --</option>
+      <option value="AM">AM</option>
+      <option value="PM">PM</option>
+    </select>
+  </div>
+</div>
+
+<div style="margin-top: 30px; text-align: center; width: 100%;">
+  <button id="submitBtn" disabled>Generate Map</button>
+</div>
+
+<div id="map"></div>
+<script 
+     src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin="">
+</script>
+<script 
+      src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js">
+</script>
+
+<script type="module" src="/src/main.js"></script>
+
+<script>
+  // Map Display
+  const map = L.map('map').setView([41.88, -87.63], 10);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+  
+  Papa.parse("chicago_crime_data.csv", {
+    download: true,
+    header: true,
+    complete: function(results) {
+      console.log("finished:", results.data);
+      const rows = results.data;
+      rows.forEach(d => {
+        if (d.latitude && d.longitude) {
+          L.circleMarker([+d.latitude, +d.longitude], { radius: 6 })
+            .bindPopup(d.name || "")
+            .addTo(map);
+        }
+      });
+    }
+  });
+</script></body>
+</html>
