@@ -235,6 +235,8 @@ submitBtn.addEventListener("click", async () => {
     document.getElementById("submitBtn").style.display = "none";
     document.getElementById("loading-screen").style.display = "flex";
 
+    
+    
     const data = {
         entering: {
             line: document.getElementById("lineDropdown_ent").value,
@@ -248,13 +250,20 @@ submitBtn.addEventListener("click", async () => {
         }
     };
 
+    
+    
     try {
         const enter_data = await generateRows(data.entering);
         const exit_data = await generateRows(data.exiting);
         console.log("Enter Rows:", enter_data);
         console.log("Exit Rows:", exit_data);
+        document.getElementById("map").style.display = "block";
         mapDisplay(enter_data.crime_data, enter_data.coordinates, "left"); // function exists in map display file
         //mapDisplay(exit_rows, "right");
+        setTimeout(() => {
+            map.invalidateSize();
+        }, 1000);
+        
     } catch (error) {
         console.error("Error generating rows:", error);
         // Optionally show an error message
