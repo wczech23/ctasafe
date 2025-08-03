@@ -257,11 +257,15 @@ submitBtn.addEventListener("click", async () => {
         const exit_data = await generateRows(data.exiting);
         console.log("Enter Rows:", enter_data);
         console.log("Exit Rows:", exit_data);
-        document.getElementById("map").style.display = "block";
-        mapDisplay(enter_data.crime_data, enter_data.coordinates, "left"); // function exists in map display file
-        //mapDisplay(exit_rows, "right");
+        document.getElementById("map_entering").style.display = "block";
+        document.getElementById("map_exiting").style.display = "block";
+        mapDisplay(enter_data.crime_data, enter_data.coordinates, "map_entering"); // function exists in map display file
+        mapDisplay(exit_data.crime_data, exit_data.coordinates, "map_exiting");
         setTimeout(() => {
-            map.invalidateSize();
+            map_entering.invalidateSize();
+        }, 1000);
+        setTimeout(() => {
+            map_exiting.invalidateSize();
         }, 1000);
         
     } catch (error) {

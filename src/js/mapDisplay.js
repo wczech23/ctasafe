@@ -1,5 +1,6 @@
-export function mapDisplay(rowData, coords, alignment) {
-    const map = L.map('map').setView([coords[0], coords[1]], 10);
+export function mapDisplay(rowData, coords, container_id) {
+    
+    const map = L.map(container_id).setView([coords[0], coords[1]], 15);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
     rowData.forEach(row => {
         L.circleMarker([+row.latitude,+row.longitude], 
@@ -23,5 +24,8 @@ export function mapDisplay(rowData, coords, alignment) {
     });
     L.marker([coords[0], coords[1]], { icon: customIcon }).addTo(map);
     // make display available
-    document.getElementById("map").style.display = "flex";
+    document.getElementById(container_id).style.display = "flex";
+    const heading_id = container_id + "_header";
+    console.log(heading_id);
+    document.getElementById(heading_id).style.display = "flex";
 } 
