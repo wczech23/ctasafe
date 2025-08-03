@@ -3,14 +3,24 @@
      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
      crossorigin=""/>
      <style>
-        #map {
-                height: 600px;
-                width: 600px;
-                margin: 0 auto;
+        #map_container {
+                display: flex;
+                gap: 20px; /* space between maps */
+                justify-content: center;
                 margin-top: 150;
+        } .map {
+                height: 400px;
+                width: 400px;
+                margin: 0 auto;
+                margin-top: 30px;
                 border: 4px solid #0d0c0c;
                 display: none;
-             }
+        } .heading {
+                height: 20px;
+                width: 200px;
+                margin: 0 auto;
+                display: none;
+        }
         #form-container {
                 text-align: center;
                 margin-top: 100px;
@@ -29,7 +39,7 @@
                 flex-direction: column;
               }
      </style>
-  <script type="module" crossorigin src="/ctasafe/assets/index-DCtheALI.js"></script>
+  <script type="module" crossorigin src="/ctasafe/assets/index-BgUfi0B6.js"></script>
 </head>
 <body>
   <div id="form-container" style="display: flex; justify-content: center; gap: 50px;">
@@ -128,8 +138,13 @@
   <p>Loading, please wait...</p>
 </div>
 
+<div id="map_container">
+  <div id="map_entering_header" class="heading">Entering Station Data</div>
+  <div id="map_entering" class="map"></div>
+  <div id="map_exiting_header" class="heading">Exiting Station Data</div>
+  <div id="map_exiting" class="map"></div>
+</div>
 
-<div id="map"></div>
 <script 
      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
